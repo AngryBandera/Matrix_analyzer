@@ -44,12 +44,11 @@ def write_to_file(relation: List[List[int]], filename: str) -> None:
     with open(filename, "w", encoding = "utf-8") as file:
         file.write(relation_to_str(relation))
 
-def relation_to_str(matrix: list[list]) -> str:
+def relation_to_str(matrix: list[list[int]]) -> str:
     '''
+    List[list] - > str
     Function which dumps matrix into string
-    
-    :param matrix: matrix we need to dump (list[list]).
-    :return: dumped into string matrix (str)
+
     '''
     return '\n'.join([''.join(map(str, row)) for row in matrix])
 
@@ -67,13 +66,23 @@ def relation_to_str(matrix: list[list]) -> str:
 #     """
 #     pass
 
-# def find_transitive_closure(matrix: List[List[int]])-> List[List[int]]:
-#     """
-#     List[List[int]] -> List[List[int]]
-#     Finds reflexive closure of {matrix}
-#     """
-#     pass
+def find_transitive_closure(matrix: List[List[int]])-> List[List[int]]:
+    """
+    List[List[int]] -> List[List[int]]
+    Finds reflexive closure of {matrix}
 
+    >>> find_transitive_closure([[1,0,1,0],[1,0,0,0],[0,0,0,1],[0,0,1,1]])
+    [[1, 0, 1, 1], [1, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1]]
+    """
+    matrix_trans = matrix.copy()
+    n = len(matrix)
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                matrix_trans[i][j] = matrix_trans[i][j] or \
+                                (matrix_trans[i][k] and matrix_trans[k][j])
+    return matrix_trans
 
 # def split_into_classes(matrix: List[List[int]])-> List[List[int]]:
 #     """
@@ -82,24 +91,66 @@ def relation_to_str(matrix: list[list]) -> str:
 #     >>> split_into_classes([[1,1,1,0],[1,1,1,0],[1,1,1,0],[0,0,0,1]])
 #     [[0, 1, 2], [3]]
 #     """
-#     pass
+#     # if is_transitive(matrix)
 
-# def is_transitive(matrix: list[list])-> bool:
+
+def is_reflexive(matrix: List[List[int]])-> bool:
+    """
+    List[List[int]] -> bool
+    Checks if relation is reflexive
+    >>> is_reflexive([[1,1,1,0],[1,1,1,0],[1,1,1,0],[0,0,0,1]])
+    True
+    >>> is_reflexive([[1,0,1,1],[0,0,1,0],[1,1,1,0],[0,0,1,1]])
+    False
+    """
+
+    for index, row in enumerate(matrix):
+        if row[index] != 1:
+            return False
+
+    return True
+
+# def is_symmetrical(matrix: List[List[int]])-> bool:
 #     """
-#     list[list] -> bool
-#     Check if given relation is transitive. Returns True if yes and False if no
-#     >>> is_transitive([[0, 0, 0, 0], [1, 0, 1, 1], [1, 0, 1, 1], [1, 0, 1, 1]])
+#     List[List[int]] -> bool
+#     Checks if relation is reflexive
+#     >>> is_symmetrical([[1,1,1,0],[1,1,1,0],[1,1,1,0],[0,0,0,1]])
 #     True
-#     >>> is_transitive([[0,1,1,0],[0,0,0,1],[0,0,0,0],[0,0,0,0]])
+#     >>> is_symmetrical([[1,0,1,1],[0,0,1,0],[1,1,1,0],[0,0,1,1]])
 #     False
 #     """
-#     pass
+
+#     for row in matrix:
+#         for column in row:
+#             if matrix[row][column] != matrix[column][row]:
+#                 return False
+
+#     return True
+
+def is_transitive(matrix: list[list])-> bool:
+    """
+    list[list] -> bool
+    Check if given relation is transitive. Returns True if yes and False if no
+    >>> is_transitive([[0, 0, 0, 0], [1, 0, 1, 1], [1, 0, 1, 1], [1, 0, 1, 1]])
+    True
+    >>> is_transitive([[0,1,1,0],[0,0,0,1],[0,0,0,0],[0,0,0,0]])
+    False
+    """
+    lenth = len(matrix[0])
+    result = [[0 for _ in range(lenth)] for _ in range(lenth)]
+
+    # Perform matrix multiplication
+    for i in range(lenth):
+        for j in range(lenth):
+            for k in range(lenth):
+                result[i][j] = matrix[i][k] and matrix[k][j]
+
+    return result == matrix
 
 # def find_transitive_number(number: int)-> int:
 #     """
 #     int -> int
 #     Return how many transitive relations are there on relation with n elements.
-#     (number<=4)
 #     >>> find_transitive_number(0)
 #     1
 #     >>> find_transitive_number(2)
