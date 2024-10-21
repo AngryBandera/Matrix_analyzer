@@ -7,13 +7,15 @@ from typing import List
 def read_file(filename: str) -> List[List[int]] | None:
     """
     Reads a matrix from a file and transforms it into a list of lists (matrix).
+    Function opens file, reads its content and transforms each line into list of integers.
+    File should conatain only 0 and 1.
     
     Args:
         filename (str): The name of the file containing the matrix.
     
     Returns:
         List[List[int]]: The matrix represented as a list of lists of integers.
-    
+        None if the file cannot be opened or not found.
     Example:
     >>> import tempfile
     >>> with tempfile.NamedTemporaryFile(mode = "w",delete=False) as tmp:
@@ -24,10 +26,12 @@ def read_file(filename: str) -> List[List[int]] | None:
     try:
         with open(filename, "r", encoding = "utf-8") as file:
             matrix = []
-
+            # Read each line in the file, strip newline characters,\
+            # and convert to a list of integers.
             for line in  file.readlines():
                 line = line.replace("\n", "")
-                column = [int(num) for num in line]
+                # Convert each character in the line to an integer
+                column = [int(num) for num in line] 
                 matrix.append(column)
             return matrix
     except FileNotFoundError:
@@ -35,12 +39,14 @@ def read_file(filename: str) -> List[List[int]] | None:
 
 def write_to_file(relation: List[List[int]], filename: str) -> None:
     """
-    Writes a matrix (relation) to a file.
+    Writes a matrix (relation) to a file. The function takes a matrix represented as a list of lists of integers and writes it 
+    to a file.
     
     Args:
         relation (List[List[int]]): The matrix to write.
         filename (str): The file where the matrix will be written.
-    
+    Returns:
+        None
     Example:
     >>> import tempfile
     >>> with tempfile.NamedTemporaryFile(mode = "w",delete=False) as tmp:
@@ -72,7 +78,6 @@ def relation_to_str(matrix: list[list[int]]) -> str:
 def find_symmetrical_closure(matrix: List[List[int]])-> List[List[int]]:
     """
     Computes the symmetrical closure of a binary matrix.
-
     Symmetrical closure means making sure if matrix[i][j] == 1, then matrix[j][i] is also 1.
     
     Args:
@@ -94,12 +99,12 @@ def find_symmetrical_closure(matrix: List[List[int]])-> List[List[int]]:
     >>> find_symmetrical_closure([[0, 0], [0, 0]])
     [[0, 0], [0, 0]]
     """
-    matrix = [row[:] for row in matrix] # creating deep copy of the matrix
+    matrix = [row[:] for row in matrix] # Creating deep copy of the matrix
 
     for row, row_value in enumerate(matrix):
         for column, column_value in enumerate(row_value):
             if column_value:
-                matrix[column][row] = 1
+                matrix[column][row] = 1 # Making parallel element symmetrical
     return matrix
 
 def find_reflexive_closure(matrix: List[List[int]])-> List[List[int]]:
@@ -127,7 +132,7 @@ def find_reflexive_closure(matrix: List[List[int]])-> List[List[int]]:
     >>> find_reflexive_closure([[1]])
     [[1]]
     """
-    matrix = [row[:] for row in matrix] # creating deep copy of the matrix
+    matrix = [row[:] for row in matrix] # Creating deep copy of the matrix
 
     for index, _ in enumerate(matrix):
         matrix[index][index] = 1
@@ -159,12 +164,22 @@ def find_transitive_closure(matrix: List[List[int]])-> List[List[int]]:
                                 (trans_closure[i][k] and trans_closure[k][j])
     return trans_closure
 
-def get_relation_pairs(matrix: List[List[int]]):
+def get_relation_pairs(matrix: List[List[int]]) -> List[tuple[int, int]]:
     """
-    gets relations from matrix
+    Gets all  relation pairs from a binary matrix. 
+    
+    Args:
+        matrix (List[List[int]]): A binary matrix.
+
+    Returns:
+        List[tuple[int, int]]: A list of tuples which contains the pairs
+        where the matrix has a 1 at matrix[i][j].
+    
+    >>> get_relation_pairs([[0, 1], [1, 0]])
+        [(0, 1), (1, 0)] 
     """
-    ... # дописати docstr
     relations = []
+    # Iterate over the matrix and extract the pairs (i, j) where matrix[i][j] == 1.
     for row, row_value in enumerate(matrix):
         for column, column_value in enumerate(row_value):
             if column_value:
