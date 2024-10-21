@@ -1,3 +1,7 @@
+output_relation_reflexive.csv
+output_relation_symmetrical.csv
+output_relation_transitive.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
