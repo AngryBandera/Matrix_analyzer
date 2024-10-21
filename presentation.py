@@ -47,7 +47,7 @@ if __name__ == "__main__":
     print(f"Symmetrical: {is_symmetrical(matrix)}")
     print(f"Transitive: {is_transitive(matrix)}")
     print()
-    
+
     # 4. Writing reflexive, symmetrical, and transitive closures to the output file
     i = 0
     for key, value in OUTPUT_FILES.items():

@@ -31,7 +31,7 @@ def read_file(filename: str) -> List[List[int]] | None:
             for line in  file.readlines():
                 line = line.replace("\n", "")
                 # Convert each character in the line to an integer
-                column = [int(num) for num in line] 
+                column = [int(num) for num in line]
                 matrix.append(column)
             return matrix
     except FileNotFoundError:
@@ -39,8 +39,8 @@ def read_file(filename: str) -> List[List[int]] | None:
 
 def write_to_file(relation: List[List[int]], filename: str) -> None:
     """
-    Writes a matrix (relation) to a file. The function takes a matrix represented as a list of lists of integers and writes it 
-    to a file.
+    Writes a matrix (relation) to a file. 
+    The function takes a matrix represented as a list of lists of integers and writes it to a file.
     
     Args:
         relation (List[List[int]]): The matrix to write.
