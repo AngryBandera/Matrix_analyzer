@@ -2,9 +2,8 @@
 Discrete maths relations lab
 """
 import doctest
-from typing import List
 
-def read_file(filename: str) -> List[List[int]] | None:
+def read_file(filename: str) -> list[list[int]] | None:
     """
     Reads a matrix from a file and transforms it into a list of lists (matrix).
     Function opens file, reads its content and transforms each line into list of integers.
@@ -14,7 +13,7 @@ def read_file(filename: str) -> List[List[int]] | None:
         filename (str): The name of the file containing the matrix.
     
     Returns:
-        List[List[int]]: The matrix represented as a list of lists of integers.
+        list[list[int]]: The matrix represented as a list of lists of integers.
         None if the file cannot be opened or not found.
     Example:
     >>> import tempfile
@@ -37,13 +36,13 @@ def read_file(filename: str) -> List[List[int]] | None:
     except FileNotFoundError:
         return None
 
-def write_to_file(relation: List[List[int]], filename: str) -> None:
+def write_to_file(relation: list[list[int]], filename: str) -> None:
     """
     Writes a matrix (relation) to a file. 
     The function takes a matrix represented as a list of lists of integers and writes it to a file.
     
     Args:
-        relation (List[List[int]]): The matrix to write.
+        relation (list[list[int]]): The matrix to write.
         filename (str): The file where the matrix will be written.
     Returns:
         None
@@ -67,7 +66,7 @@ def relation_to_str(matrix: list[list[int]]) -> str:
     Converts a matrix to a string for file storage or display.
     
     Args:
-        matrix (List[List[int]]): The matrix to convert.
+        matrix (list[list[int]]): The matrix to convert.
     
     Returns:
         str: The string representation of the matrix, with rows joined by newline.
@@ -75,16 +74,16 @@ def relation_to_str(matrix: list[list[int]]) -> str:
     # Convert each row to a string, join them with newlines
     return '\n'.join([''.join(map(str, row)) for row in matrix])
 
-def find_symmetrical_closure(matrix: List[List[int]])-> List[List[int]]:
+def find_symmetrical_closure(matrix: list[list[int]])-> list[list[int]]:
     """
     Computes the symmetrical closure of a binary matrix.
     Symmetrical closure means making sure if matrix[i][j] == 1, then matrix[j][i] is also 1.
     
     Args:
-        matrix (List[List[int]]): A square binary matrix (i.e., only contains 0s and 1s).
+        matrix (list[list[int]]): A square binary matrix (i.e., only contains 0s and 1s).
     
     Returns:
-        List[List[int]]: The symmetrical closure of the input matrix.
+        list[list[int]]: The symmetrical closure of the input matrix.
     
     Example:
     >>> find_symmetrical_closure([[0, 1, 0], [0, 0, 1], [1, 0, 0]])
@@ -107,7 +106,7 @@ def find_symmetrical_closure(matrix: List[List[int]])-> List[List[int]]:
                 matrix[column][row] = 1 # Making parallel element symmetrical
     return matrix
 
-def find_reflexive_closure(matrix: List[List[int]])-> List[List[int]]:
+def find_reflexive_closure(matrix: list[list[int]])-> list[list[int]]:
     """
     Computes the reflexive closure of a binary matrix.
 
@@ -138,15 +137,15 @@ def find_reflexive_closure(matrix: List[List[int]])-> List[List[int]]:
         matrix[index][index] = 1
     return matrix
 
-def find_transitive_closure(matrix: List[List[int]])-> List[List[int]]:
+def find_transitive_closure(matrix: list[list[int]])-> list[list[int]]:
     """
     Finds the transitive closure of a given relation matrix using the Floyd-Warshall algorithm.
     
     Args:
-        matrix (List[List[int]]): The relation matrix.
+        matrix (list[list[int]]): The relation matrix.
     
     Returns:
-        List[List[int]]: The transitive closure of the matrix.
+        list[list[int]]: The transitive closure of the matrix.
     
     Example:
     >>> find_transitive_closure([[1,0,1,0],[1,0,0,0],[0,0,0,1],[0,0,1,1]])
@@ -164,15 +163,15 @@ def find_transitive_closure(matrix: List[List[int]])-> List[List[int]]:
                                 (trans_closure[i][k] and trans_closure[k][j])
     return trans_closure
 
-def get_relation_pairs(matrix: List[List[int]]) -> List[tuple[int, int]]:
+def get_relation_pairs(matrix: list[list[int]]) -> list[tuple[int, int]]:
     """
     Gets all  relation pairs from a binary matrix. 
     
     Args:
-        matrix (List[List[int]]): A binary matrix.
+        matrix (list[list[int]]): A binary matrix.
 
     Returns:
-        List[tuple[int, int]]: A list of tuples which contains the pairs
+        list[tuple[int, int]]: A list of tuples which contains the pairs
         where the matrix has a 1 at matrix[i][j].
     
     >>> get_relation_pairs([[0, 1], [1, 0]])
@@ -187,15 +186,15 @@ def get_relation_pairs(matrix: List[List[int]]) -> List[tuple[int, int]]:
                     relations.append((row, column))
     return relations
 
-def split_into_classes(matrix: List[List[int]]) -> List[List[int]] | None:
+def split_into_classes(matrix: list[list[int]]) -> list[list[int]] | None:
     """
     Splits a relation matrix into equivalence classes.
     
     Args:
-        matrix (List[List[int]]): The relation matrix.
+        matrix (list[list[int]]): The relation matrix.
     
     Returns:
-        List[List[int]]: A list of lists where each inner list represents an equivalence class
+        list[list[int]]: A list of lists where each inner list represents an equivalence class
                         or None if matrix is not relation of equity.
     
     Example:
@@ -233,9 +232,9 @@ def split_into_classes(matrix: List[List[int]]) -> List[List[int]] | None:
 
     return relation_classes
 
-def is_reflexive(matrix: List[List[int]])-> bool:
+def is_reflexive(matrix: list[list[int]])-> bool:
     """
-    List[List[int]] -> bool
+    list[list[int]] -> bool
     Checks if relation is reflexive
     >>> is_reflexive([[1,1,1,0],[1,1,1,0],[1,1,1,0],[0,0,0,1]])
     True
@@ -250,9 +249,9 @@ def is_reflexive(matrix: List[List[int]])-> bool:
 
     return all(matrix[i][i] == 1 for i in range(len(matrix)))
 
-def is_symmetrical(matrix: List[List[int]])-> bool:
+def is_symmetrical(matrix: list[list[int]])-> bool:
     """
-    List[List[int]] -> bool
+    list[list[int]] -> bool
     Checks if relation is reflexive
     >>> is_symmetrical([[1,1,1,0],[1,1,1,0],[1,1,1,0],[0,0,0,1]])
     True
