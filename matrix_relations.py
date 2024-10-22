@@ -182,8 +182,7 @@ def get_relation_pairs(matrix: list[list[int]]) -> list[tuple[int, int]]:
     for row, row_value in enumerate(matrix):
         for column, column_value in enumerate(row_value):
             if column_value:
-                if column_value:
-                    relations.append((row, column))
+                relations.append((row, column))
     return relations
 
 def split_into_classes(matrix: list[list[int]]) -> list[list[int]] | None:
@@ -275,3 +274,4 @@ def is_transitive(matrix: list[list])-> bool:
 
 if __name__ == '__main__':
     print(doctest.testmod())
+    
