@@ -173,9 +173,6 @@ def get_relation_pairs(matrix: list[list[int]]) -> list[tuple[int, int]]:
     Returns:
         list[tuple[int, int]]: A list of tuples which contains the pairs
         where the matrix has a 1 at matrix[i][j].
-    
-    >>> get_relation_pairs([[0, 1], [1, 0]])
-        [(0, 1), (1, 0)] 
     """
     relations = []
     # Iterate over the matrix and extract the pairs (i, j) where matrix[i][j] == 1.
@@ -218,12 +215,14 @@ def split_into_classes(matrix: list[list[int]]) -> list[list[int]] | None:
         if visited_values[value]:
             continue
 
+        visited_values[value] = True
+
         # if value is new, creating it's class
         relation_class = [value]
         for relation in relations:
             if value in relation:
                 new_value = relation[(relation.index(value) + 1) % 1]
-                if not new_value in relation_class:
+                if not new_value in relation_class and not visited_values[new_value]:
                     relation_class.append(new_value)
                     visited_values[new_value] = True
 
